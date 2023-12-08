@@ -5,41 +5,34 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Controller } from "react-hook-form";
 export default function MySelectField(props) {
-  const { label, name, control } = props;
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const { width, label, name, control } = props;
 
   return (
-    <div>
-      <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-filled-label">{label}</InputLabel>
-        <Controller
-          name={name}
-          control={control}
-          render={({
-            field: { onChange, value },
-            fieldState: { error },
-            formState,
-          }) => (
-            <Select
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
-              value={age}
-              onChange={handleChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          )}
-        />
-      </FormControl>
-    </div>
+    <FormControl variant="standard" sx={{ width: { width } }}>
+      <InputLabel id="demo-simple-select-filled-label">{label}</InputLabel>
+      <Controller
+        name={name}
+        control={control}
+        render={({
+          field: { onChange, value },
+          fieldState: { error },
+          formState,
+        }) => (
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={value}
+            onChange={onChange}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={"open"}>Open</MenuItem>
+            <MenuItem value={"in-progress"}>In Progress</MenuItem>
+            <MenuItem value={"completed"}>Completed</MenuItem>
+          </Select>
+        )}
+      />
+    </FormControl>
   );
 }
