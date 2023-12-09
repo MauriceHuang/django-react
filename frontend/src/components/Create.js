@@ -5,12 +5,33 @@ import MyMultilineField from "./forms/MyMultilineField";
 import MySelectField from "./forms/MySelectField";
 import MyTextField from "./forms/MyTextField";
 import { useForm } from "react-hook-form";
-
+import AxiosInstance from "./Axios";
+import Dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 const Create = () => {
-  const { handleSubmit, control, reset, setValue } = useForm();
-  const handleFormSubmit = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const defaultValues = {
+    name: "",
+    start_date: null,
+    end_date: null,
+    comment: "",
+    status: "",
   };
+  const { handleSubmit, control, reset, setValue } = useForm({ defaultValues });
+  const handleFormSubmit = (data) => {
+    const StartDate = Dayjs(data.start_date["$d"]).format("YYYY-MM-DD");
+    const EndDate = Dayjs(data.end_date["$d"]).format("YYYY-MM-DD");
+    AxiosInstance.post(`project/`, {
+      name: data.name,
+      start_date: StartDate,
+      end_date: EndDate,
+      comment: data.comment,
+      status: data.status,
+    }).then((res) => {
+      navigate("/");
+    });
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -76,10 +97,11 @@ const Create = () => {
               control={control}
               width="30%"
             />
-            <Box sx={{ width: "30%" }}></Box>
-            <Button variant="contained" type="submit" sx={{ width: "100%" }}>
-              Submit
-            </Button>
+            <Box sx={{ width: "30%" }}>
+              <Button variant="contained" type="submit" sx={{ width: "100%" }}>
+                Submit
+              </Button>
+            </Box>
           </Box>
         </Box>
       </form>

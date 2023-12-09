@@ -9,7 +9,7 @@ from rest_framework.response import Response
 # def home(request):
     # return HttpResponse("Hello World")
 
-class ProjectViewSet(viewsets.ModelViewSet):
+class ProjectViewset(viewsets.ViewSet):
     permission_classes=[permissions.AllowAny]
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
@@ -21,11 +21,11 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(): 
             serializer.save()
             return Response(serializer.data)
         else: 
-            return Response(serializer.errors, status=404)
+            return Response(serializer.errors, status=400)
     def retrieve(self, request, pk=None):
         project = self.queryset.get(pk=pk)
         serializer = self.serializer_class(project)
