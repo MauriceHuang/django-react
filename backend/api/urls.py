@@ -6,5 +6,5 @@ from rest_framework.routers import DefaultRouter
 #     path('',home)
 # ]
 router = DefaultRouter()
-router.register('project', ProjectViewSet, basename='project') #what does this do?
+router.register('project', ProjectViewset, basename='project') #what does this do?
 urlpatterns = router.urls
