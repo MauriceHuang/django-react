@@ -13,3 +13,4 @@ class Project(models.Model):
 # This ensure that we can see the name of the project in the admin panel instead of Project id 
     def __str__(self):
         return self.name
+
