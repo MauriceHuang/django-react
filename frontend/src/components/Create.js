@@ -8,16 +8,38 @@ import { useForm } from "react-hook-form";
 import AxiosInstance from "./Axios";
 import Dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 const Create = () => {
   const navigate = useNavigate();
   const defaultValues = {
     name: "",
-    start_date: null,
-    end_date: null,
     comment: "",
     status: "",
   };
-  const { handleSubmit, control } = useForm({ defaultValues });
+
+  const schema = yup.object({
+    name: yup.string().required("Name is a required field"),
+    projectmanager: yup
+      .string()
+      .required("Project manager is a required field"),
+    status: yup.string().required("Status is a required field"),
+    comments: yup.string(),
+    start_date: yup.date().required("Start date is a required field"),
+    end_date: yup
+      .date()
+      .required("End date is a required field")
+      .min(
+        yup.ref("start_date"),
+        "The end date can not be before the start date"
+      ),
+  });
+
+  const { handleSubmit, control } = useForm({
+    defaultValues: defaultValues,
+    resolver: yupResolver(schema),
+  });
+
   const handleFormSubmit = (data) => {
     const StartDate = Dayjs(data.start_date["$d"]).format("YYYY-MM-DD");
     const EndDate = Dayjs(data.end_date["$d"]).format("YYYY-MM-DD");
