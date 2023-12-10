@@ -24,7 +24,7 @@ const Edit = () => {
   };
   useEffect(() => {
     getData();
-  });
+  }, []);
   const defaultValues = {
     name: "",
     start_date: null,

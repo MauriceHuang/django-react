@@ -67,7 +67,11 @@ const Home = () => {
               >
                 <EditIcon />
               </IconButton>
-              <IconButton color="error">
+              <IconButton
+                color="error"
+                component={Link}
+                to={`delete/${row.original.id}`}
+              >
                 <DeleteIcon />
               </IconButton>
             </Box>
