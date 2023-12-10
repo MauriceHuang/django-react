@@ -27,8 +27,6 @@ const Edit = () => {
   }, []);
   const defaultValues = {
     name: "",
-    start_date: null,
-    end_date: null,
     comment: "",
     status: "",
   };
